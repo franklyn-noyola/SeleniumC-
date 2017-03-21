@@ -15,8 +15,8 @@ namespace AUSA
     [TestClass]
     public class ausaIssuesCreate : ausaFieldsConfiguration
     {
-        public static string beginDate; public static string tempText1;public static string[] options1;
-        public static int camCount;public static string[] options;public static Boolean[] dOptionChecked;
+        public static string beginDate; public static string tempText1;public static string[] options1 = new string[vOption.Length];
+        public static int camCount;public static string[] options = new string[dOption.Length];public static Boolean[] dOptionChecked = new Boolean[dOption.Length];
         public static IWebElement sevText; public static string sevText1;public static string parteNumber;
         public static IWebElement priorText; public static string priorText1;
         public static string typeText; public static IWebElement assignedText; public static string assignedText1;
@@ -49,13 +49,14 @@ namespace AUSA
             try
             {
                 Actions action = new Actions(driver);
+                driver.Navigate().GoToUrl(baseUrl);
+                System.Threading.Thread.Sleep(500);
                 if (driver.PageSource.Contains("No se puede acceder a este sitio web"))
-                {                    
-                    Console.WriteLine("ITS NO ESTA DISPONIBLE");
+                {
+                    takeScreenShot("ausaNoDispERR.jpeg");
+                    Assert.Fail("ITS NO ESTA DISPONIBLE");
                     return;
                 }
-                
-                driver.Navigate().GoToUrl(baseUrl);
                 driver.FindElement(By.Id("BoxLogin")).SendKeys("00001");
                 driver.FindElement(By.Id("BoxPassword")).SendKeys("00001");
                 driver.FindElement(By.Id("BtnLogin")).Click();
@@ -143,8 +144,34 @@ namespace AUSA
             }
             
             System.Threading.Thread.Sleep(1500);
+            grabarDatosFichero();
+            System.Threading.Thread.Sleep(1000);
             driver.FindElement(By.Id(issueCreateBtn)).Click();
-            System.Threading.Thread.Sleep(2500);
+            System.Threading.Thread.Sleep(2000);
+            List<string> multipleTabs = new List<string>(driver.WindowHandles);
+            if (multipleTabs.Count > 2)
+            {
+                string errorText = driver.FindElement(By.XPath("//div[@class='toast-item toast-type-error']/p")).Text;
+                errorCreate = true;
+                crearFichero();
+                Console.WriteLine("Ver Archivo de Datos " + verFile + " y reproducir error manualmente");
+                Assert.Fail("ERROR EN CREAR PARTE: " + errorText);
+                return;
+            }
+            else
+            {
+                errorCreate = false;
+                /*driver.switchTo().window(multipleTabs.get(1));
+                Partes1 = mPartes;
+                Assert.assertEquals(mPartes, Partes1);*/
+                IWebElement table = driver.FindElement(By.CssSelector("tbody tr td table#tableIssues.generalTable"));
+                string buscar1 = table.FindElement(By.XPath("//table[@id='tableIssues']/tbody/tr[1]")).GetAttribute("id");
+                parteNumber = buscar1.Substring(6);
+                System.Threading.Thread.Sleep(1000);
+                crearFichero();
+                Console.WriteLine("Se ha creado parte No. " + parteNumber + " correctamente. Verificar archivo log " + verFile + "_NEW con los datos creados");
+                System.Threading.Thread.Sleep(1500);
+            }
         }
 
       
@@ -277,7 +304,7 @@ namespace AUSA
 				 if (newComSel.Equals(null)){
 					 newComSel = "";
 				 }
-				 comMean = new SelectElement(driver.FindElement(By.Id(medioField))).SelectedOption();
+				 comMean = new SelectElement(driver.FindElement(By.Id(medioField))).SelectedOption;
                     comMeanSel = comMean.Text;
 					 if (comMeanSel.Equals(null)){
 						 comMeanSel = "";
