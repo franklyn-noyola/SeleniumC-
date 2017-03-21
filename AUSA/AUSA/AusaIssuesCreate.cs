@@ -7,7 +7,7 @@ using OpenQA.Selenium.Interactions;
 using System.Linq;
 using OpenQA.Selenium.Support.UI;
 using System.Collections.Generic;
-
+using System.IO;
 
 namespace AUSA  
 {
@@ -15,6 +15,27 @@ namespace AUSA
     [TestClass]
     public class ausaIssuesCreate : ausaFieldsConfiguration
     {
+        public static string beginDate; public static string tempText1;public static string[] options1;
+        public static int camCount;public static string[] options;public static Boolean[] dOptionChecked;
+        public static IWebElement sevText; public static string sevText1;public static string parteNumber;
+        public static IWebElement priorText; public static string priorText1;
+        public static string typeText; public static IWebElement assignedText; public static string assignedText1;
+        public static string locateText; public static IWebElement autopistaText; public static string autopistaText1;
+        public static string autopistaText11; public static IWebElement bandaText; public static string bandaText1;
+        public static Boolean supervT = false; public static string PkmText; public static string PkmText1;
+        public static IWebElement ramalsText; public static string ramalsText1; public static string typeAcc;
+        public static string observacionesText; public static IWebElement supervisorText; public static string supervisorText1;
+        public static string typeImpact; public static string cAparente;public static Boolean[] cameraOpt;
+        public static string infoComp;public static string obserGenerales;public static string notaCentro;
+        public static IList<IWebElement> mcCamerasS;public static string[] cameraSelT;public static int i = 0;
+        public static string vVolcadosT;public static Boolean[] vOptionTSel;public static IWebElement importanceC;
+        public static string importanceC1;public static IWebElement newCom; public static string newComSel;
+        public static IWebElement comMean; public static string comMeanSel;public static string comTitle;
+        public static IWebElement motiveD; public static string motiveSel;public static IWebElement originC; public static string originSel;
+        public static IWebElement originC_DestinaC; public static string originC_DestSel;
+        public static string importanceSel;public static string matterCom;public static string commentCom;
+        public static Boolean errorCreate = false; public static string verFile;public static string path;
+        public static int volNumber;public static int[] vOptionNumber;
 
         [TestInitialize]
         public void seTup()
@@ -127,7 +148,6 @@ namespace AUSA
         }
 
       
-     
         public static void datosSection()
         {
             System.Threading.Thread.Sleep(1500);
@@ -177,224 +197,219 @@ namespace AUSA
             driver.FindElement(By.Id(commentField)).SendKeys("This Communication was created by an automation script for testing purpose");
             System.Threading.Thread.Sleep(1000);
         }
-        public static void grabarDatosFichero() throws Exception
-        {
-            beginDate = driver.findElement(By.id("ctl00_ContentZone_dt_opentime_box_date")).getAttribute("value");
-            tempText1 = driver.findElement(By.id("ctl00_ContentZone_txt_template_box_data")).getAttribute("value");
-            sevText = new Select(driver.findElement(By.id("ctl00_ContentZone_cmb_severity_cmb_dropdown"))).getFirstSelectedOption();
-        sevText1 = sevText.getText();
-			priorText = new Select(driver.findElement(By.id("ctl00_ContentZone_cmb_priority_cmb_dropdown"))).getFirstSelectedOption();
-        priorText1 = priorText.getText();
-			typeText = driver.findElement(By.id("ctl00_ContentZone_txt_type_box_data")).getAttribute("value");
-        assignedText = new Select(driver.findElement(By.id(asignadoT))).getFirstSelectedOption();
-        assignedText1 = assignedText.getText();
-			locateText = driver.findElement(By.id("ctl00_ContentZone_txt_location_box_data")).getAttribute("value");
-        autopistaText = new Select(driver.findElement(By.id(tValoresT))).getFirstSelectedOption();
-        autopistaText1 = autopistaText.getText();
-			bandaText = new Select(driver.findElement(By.id(direcT))).getFirstSelectedOption();
-        bandaText1 = bandaText.getText();
-			PkmText = driver.findElement(By.id("ctl00_ContentZone_ctlPkm_txt_PkmKm_box_data")).getAttribute("value");
-        PkmText1 = driver.findElement(By.id("ctl00_ContentZone_ctlPkm_txt_PkmM_box_data")).getAttribute("value");
-        ramalsText = new Select(driver.findElement(By.id(ramalsT))).getFirstSelectedOption();
-        ramalsText1 = ramalsText.getText();
-			observacionesText = driver.findElement(By.id("ctl00_ContentZone_txt_comments_box_data")).getAttribute("value");
-			if (driver.findElements(By.id(supervisorT)).size()!=0){
-				supervisorText = new Select(driver.findElement(By.id("ctl00_ContentZone_cmb_assigned_cmb_dropdown"))).getFirstSelectedOption();
-        supervisorText1 = supervisorText.getText();
-				supervT = true;
+        public static void grabarDatosFichero() {
+            beginDate = driver.FindElement(By.Id("ctl00_ContentZone_dt_opentime_box_date")).GetAttribute("value");
+            tempText1 = driver.FindElement(By.Id("ctl00_ContentZone_txt_template_box_data")).GetAttribute("value");
+            sevText = new SelectElement(driver.FindElement(By.Id("ctl00_ContentZone_cmb_severity_cmb_dropdown"))).SelectedOption;
+                sevText1 = sevText.Text;
+			priorText = new SelectElement(driver.FindElement(By.Id("ctl00_ContentZone_cmb_priority_cmb_dropdown"))).SelectedOption;
+                priorText1 = priorText.Text;
+			typeText = driver.FindElement(By.Id("ctl00_ContentZone_txt_type_box_data")).GetAttribute("value");
+            assignedText = new SelectElement(driver.FindElement(By.Id(asignadoT))).SelectedOption;
+                assignedText1 = assignedText.Text;
+			locateText = driver.FindElement(By.Id("ctl00_ContentZone_txt_location_box_data")).GetAttribute("value");
+            autopistaText = new SelectElement(driver.FindElement(By.Id(tValoresT))).SelectedOption;
+                autopistaText1 = autopistaText.Text;
+			bandaText = new SelectElement(driver.FindElement(By.Id(direcT))).SelectedOption;
+                bandaText1 = bandaText.Text;
+			PkmText = driver.FindElement(By.Id("ctl00_ContentZone_ctlPkm_txt_PkmKm_box_data")).GetAttribute("value");
+            PkmText1 = driver.FindElement(By.Id("ctl00_ContentZone_ctlPkm_txt_PkmM_box_data")).GetAttribute("value");
+            ramalsText = new SelectElement(driver.FindElement(By.Id(ramalsT))).SelectedOption;
+                ramalsText1 = ramalsText.Text;
+			observacionesText = driver.FindElement(By.Id("ctl00_ContentZone_txt_comments_box_data")).GetAttribute("value");
+			if (driver.FindElements(By.Id(supervisorT)).Count!=0){
+				supervisorText = new SelectElement(driver.FindElement(By.Id("ctl00_ContentZone_cmb_assigned_cmb_dropdown"))).SelectedOption;
+                    supervisorText1 = supervisorText.Text;
+				        supervT = true;
           }
-    Thread.sleep(1000);	  					
-			if (typeText.equals("Incidente") || typeText.equals("Accidente")){
-				typeAcc = driver.findElement(By.id("ctl00_ContentZone_mc_typeOfAccident_txt_selected")).getAttribute("value");
-    typeImpact = driver.findElement(By.id("ctl00_ContentZone_mc_causal_txt_selected")).getAttribute("value");
-
-}
-cAparente = driver.findElement(By.id("ctl00_ContentZone_txt_causes_box_data")).getAttribute("value");
+        System.Threading.Thread.Sleep(1000);	  					
+			if (typeText.Equals("Incidente") || typeText.Equals("Accidente")){
+				    typeAcc = driver.FindElement(By.Id("ctl00_ContentZone_mc_typeOfAccident_txt_selected")).GetAttribute("value");
+                    typeImpact = driver.FindElement(By.Id("ctl00_ContentZone_mc_causal_txt_selected")).GetAttribute("value");
+                }
+            cAparente = driver.FindElement(By.Id("ctl00_ContentZone_txt_causes_box_data")).GetAttribute("value");
 						if (cAparente == null){
 								cAparente = "";
 						}
-			infoComp = driver.findElement(By.id("ctl00_ContentZone_txt_information_box_data")).getAttribute("value");
+			infoComp = driver.FindElement(By.Id("ctl00_ContentZone_txt_information_box_data")).GetAttribute("value");
 					if (infoComp == null){
 								infoComp = "";
 					}
-			obserGenerales = driver.findElement(By.id("ctl00_ContentZone_txt_observations_box_data")).getAttribute("value");
+			obserGenerales = driver.FindElement(By.Id("ctl00_ContentZone_txt_observations_box_data")).GetAttribute("value");
 					if (obserGenerales == null){
 							obserGenerales = "";
 					}
-			notaCentro = driver.findElement(By.id("ctl00_ContentZone_txt_note_box_data")).getAttribute("value");
+			notaCentro = driver.FindElement(By.Id("ctl00_ContentZone_txt_note_box_data")).GetAttribute("value");
 					if (notaCentro == null){
 						notaCentro = "";
 					}
-					mcCamerasS = driver.findElements(By.xpath("//*[contains(@id, 'ctl00_ContentZone_mcCameras_ctl')]"));
-					cameraOpt  = new boolean[mcCamerasS.size()];
-					cameraSelT = new String[mcCamerasS.size()];
-					String[] del2 = new String[mcCamerasS.size()];
-driver.findElement(By.id(cameraSel)).click();
-		            	for (i = 0; i<= mcCamerasS.size()-1;i++){		            		
-		            		del2[i] = mcCamerasS.get(i).getAttribute("id");
-cameraOpt[i] = driver.findElement(By.xpath("//*[@id="+"'"+del2[i]+"'"+"]")).isSelected();
+					mcCamerasS = driver.FindElements(By.XPath("//*[contains(@id, 'ctl00_ContentZone_mcCameras_ctl')]"));
+					cameraOpt  = new Boolean[mcCamerasS.Count];
+					cameraSelT = new string[mcCamerasS.Count];
+					string[] del2 = new string[mcCamerasS.Count];
+                    driver.FindElement(By.Id(cameraSel)).Click();
+		            	for (i = 0; i<= mcCamerasS.Count-1;i++){		            		
+		            		del2[i] = mcCamerasS.ElementAt(i).GetAttribute("id");
+                    cameraOpt[i] = driver.FindElement(By.XPath("//*[@id="+"'"+del2[i]+"'"+"]")).Selected;
 		            		if (cameraOpt[i]){
 		            			camCount = camCount + 1;
-		            			cameraSelT[i]=driver.findElement(By.xpath("//label[@for="+"'"+del2[i]+"'"+"]")).getText();
+		            			cameraSelT[i]=driver.FindElement(By.XPath("//label[@for="+"'"+del2[i]+"'"+"]")).Text;
 		            		}
 		            	}
-		            	Thread.sleep(1000);
-		            	driver.findElement(By.id(cameraSel)).click();
-			for (i = 1; i<dOption.length;i++){
-					options[i] = driver.findElement(By.xpath("//label[@for="+"'"+dOption[i]+"'"+"]")).getText();
-dOptionChecked[i] = driver.findElement(By.id(dOption[i])).isSelected();
-					if (options[i].equals("Vehículos volcados")){	  									  								
-						vVolcadosT = "Vehiculos volcados";
-					}
-				}
+		            	System.Threading.Thread.Sleep(1000);
+		            	driver.FindElement(By.Id(cameraSel)).Click();
+			                for (i = 1; i<dOption.Length;i++){
+					            options[i] = driver.FindElement(By.XPath("//label[@for="+"'"+dOption[i]+"'"+"]")).Text;
+                                    dOptionChecked[i] = driver.FindElement(By.Id(dOption[i])).Selected;
+					                    if (options[i].Equals("Vehículos volcados")){	  									  								
+						                        vVolcadosT = "Vehiculos volcados";
+					                    }
+				                    }
 			
-			if (typeText.equals("Incidente") || typeText.equals("Accidente")){
-				for (int i = 1; i<vOption.length;i++){
-					options1[i] = driver.findElement(By.xpath("//label[@for="+"'"+vOption[i]+"'"+"]")).getText();
-vOptionTSel[i] = driver.findElement(By.id(vOption[i])).isSelected();					
-					}
-				comTitle = driver.findElement(By.id(communicationField)).getAttribute("value");
-newCom = new Select(driver.findElement(By.id(newCommunication))).getFirstSelectedOption();
-newComSel = newCom.getText();
-				 if (newComSel.equals(null)){
+			                if (typeText.Equals("Incidente") || typeText.Equals("Accidente")){
+				                for (int i = 1; i<vOption.Length;i++){
+					                options1[i] = driver.FindElement(By.XPath("//label[@for="+"'"+vOption[i]+"'"+"]")).Text;
+                                    vOptionTSel[i] = driver.FindElement(By.Id(vOption[i])).Selected;					
+					            }
+				comTitle = driver.FindElement(By.Id(communicationField)).GetAttribute("value");
+                newCom = new SelectElement(driver.FindElement(By.Id(newCommunication))).SelectedOption;
+                    newComSel = newCom.Text;
+				 if (newComSel.Equals(null)){
 					 newComSel = "";
 				 }
-				 comMean = new Select(driver.findElement(By.id(medioField))).getFirstSelectedOption();
-comMeanSel = comMean.getText();
-					 if (comMeanSel.equals(null)){
+				 comMean = new SelectElement(driver.FindElement(By.Id(medioField))).SelectedOption();
+                    comMeanSel = comMean.Text;
+					 if (comMeanSel.Equals(null)){
 						 comMeanSel = "";
 					 }
-					 motiveD = new Select(driver.findElement(By.id(motiveField))).getFirstSelectedOption();
-motiveSel = comMean.getText();
-						 if (motiveSel.equals(null)){
-							 motiveSel = "";
-						 } 
-				    originC = new Select(driver.findElement(By.id(originDestination))).getFirstSelectedOption();
-originSel = originC.getText();
-					 	if (originSel.equals(null)){
+					 motiveD = new SelectElement(driver.FindElement(By.Id(motiveField))).SelectedOption;
+                        motiveSel = comMean.Text;
+						     if (motiveSel.Equals(null)){
+							        motiveSel = "";
+						    } 
+				    originC = new SelectElement(driver.FindElement(By.Id(originDestination))).SelectedOption;
+                        originSel = originC.Text;
+					 	if (originSel.Equals(null)){
 					 		originSel = "";
 					 	}
 					 if (originSel!=null){	
-					 	originC_DestinaC = new Select(driver.findElement(By.id(originDest))).getFirstSelectedOption();
-originC_DestSel = originC_DestinaC.getText();
-					 		if (originC_DestSel.equals(null)){
-					 			originC_DestSel = "";
-					 		}
+					 	originC_DestinaC = new SelectElement(driver.FindElement(By.Id(originDest))).SelectedOption;
+                            originC_DestSel = originC_DestinaC.Text;
+					 		    if (originC_DestSel.Equals(null)){
+					 			    originC_DestSel = "";
+					 		    }
 					 	}else{
 					 		originC_DestSel = "";
 					 	}
-					 	importanceC = new Select(driver.findElement(By.id(importanceField))).getFirstSelectedOption();
-importanceSel = importanceC.getText();
-					 			if (importanceSel.equals(null)){
+					 	importanceC = new SelectElement(driver.FindElement(By.Id(importanceField))).SelectedOption;
+                            importanceSel = importanceC.Text;
+					 			if (importanceSel.Equals(null)){
 					 				importanceSel = "";
 					 			}
-					 	matterCom = driver.findElement(By.id(subjectField)).getAttribute("value");
-commentCom = driver.findElement(By.id(commentField)).getAttribute("value");
+					 	matterCom = driver.FindElement(By.Id(subjectField)).GetAttribute("value");
+                        commentCom = driver.FindElement(By.Id(commentField)).GetAttribute("value");
 					 	
 					}
 			
 	}
-		public static void crearFichero() throws Exception
-{
+		public static void crearFichero() {
 			if (errorCreate){
-        verFile = "crearPartesResultdosErrFile";
-    } else{
-        verFile = "crearPartesResultadosSuccess";
-    }
-    File oldFile = new File("C:\\Selenium\\"+verFile+"_OLD.txt");
-			if (oldFile.exists()){
-				oldFile.delete();
-			}
-			File result = new File("C:\\Selenium\\" + verFile + "_NEW.txt");
-			if (result.exists()){
-				result.renameTo(new File("C:\\Selenium\\"+verFile+"_OLD.txt"));
-			}			
-			FileOutputStream fis = new FileOutputStream(new File(result.toString()));
-PrintStream out = new PrintStream(fis);
-PrintStream old = System.out;
-			System.setOut(out);
+                verFile = "crearPartesResultdosErrFile";
+            } else{
+                verFile = "crearPartesResultadosSuccess";
+            }
+            path = "C:\\Selenium\\";
+            FileStream oldFile = new FileStream (path+verFile+"_OLD.txt", FileMode.Create);
+			    if (File.Exists(path+verFile+"_OLD.txt")){
+                        File.Delete(path + verFile + "_OLD.txt");
+                }
+			FileStream result = new FileStream("C:\\Selenium\\" + verFile + "_NEW.txt", FileMode.Create);
+			if (File.Exists(path + verFile + "_NEW.txt")){
+                File.Copy(path + verFile + "_NEW.txt", path + verFile + "_OLD.txt");
+                }
+						
+			StreamWriter fis = new StreamWriter(result);
+           
+
 			if (parteNumber!=null){
-				System.out.println("#Parte: "+parteNumber);
+				Console.WriteLine("#Parte: "+parteNumber);
 			}									
-			System.out.println("Fecha Inicio: "+beginDate);
-System.out.println("Plantilla: "+tempText1);
-System.out.println("Gravedad: "+sevText1);
-System.out.println("Prioridad: "+priorText1);
-System.out.println("Tipo: "+typeText);
-System.out.println("Asignado: "+assignedText1);
+			    Console.WriteLine("Fecha Inicio: "+beginDate);
+                Console.WriteLine("Plantilla: "+tempText1);
+                Console.WriteLine("Gravedad: "+sevText1);
+                Console.WriteLine("Prioridad: "+priorText1);
+                Console.WriteLine("Tipo: "+typeText);
+                Console.WriteLine("Asignado: "+assignedText1);
 			if (supervT){
-				System.out.println("Supervisor: "+supervisorText1);
-			}	  					
-			System.out.println("Autopista: "+autopistaText1);
-System.out.println("Banda: "+bandaText1);
-System.out.println("PKM(Km+m): "+PkmText+"+"+PkmText1);
-System.out.println("Ramales: "+ramalsText1);
-System.out.println("Localización: "+locateText);
-System.out.println("Observaciones: "+observacionesText);
-Thread.sleep(1000);	  					
-			if (typeText.equals("Incidente") || typeText.equals("Accidente")){
-				System.out.println("Tipo de Accidentes: "+ typeAcc);
-System.out.println("Tipo de Impacto: "+typeImpact);
+                Console.WriteLine("Supervisor: "+supervisorText1);
 			}
-			System.out.println("Causas Aparentes del Hecho: "+cAparente);
-System.out.println("Información complementaria: "+infoComp);
-System.out.println("Observaciones Generales: "+obserGenerales);
-System.out.println("Nota del centro de operaciones: "+notaCentro);
+            Console.WriteLine("Autopista: "+autopistaText1);
+            Console.WriteLine("Banda: "+bandaText1);
+            Console.WriteLine("PKM(Km+m): "+PkmText+"+"+PkmText1);
+            Console.WriteLine("Ramales: "+ramalsText1);
+            Console.WriteLine("Localización: "+locateText);
+            Console.WriteLine("Observaciones: "+observacionesText);
+            System.Threading.Thread.Sleep(1000);	  					
+			if (typeText.Equals("Incidente") || typeText.Equals("Accidente")){
+                Console.WriteLine("Tipo de Accidentes: "+ typeAcc);
+                Console.WriteLine("Tipo de Impacto: "+typeImpact);
+			}
+            Console.WriteLine("Causas Aparentes del Hecho: "+cAparente);
+            Console.WriteLine("Información complementaria: "+infoComp);
+            Console.WriteLine("Observaciones Generales: "+obserGenerales);
+            Console.WriteLine("Nota del centro de operaciones: "+notaCentro);
     			if (camCount > 1){
-    				System.out.print("Camara/s Seleccionada/s: ");
+                    Console.WriteLine("Camara/s Seleccionada/s: ");
     			}else{
-    				System.out.print("Camara Seleccionada: ");
+                    Console.WriteLine("Camara Seleccionada: ");
     			}
-			for (i = 0; i<= mcCamerasS.size()-1;i++){
+			for (i = 0; i<= mcCamerasS.Count-1;i++){
 				if (cameraOpt[i]){
 						if (camCount > 1){
-							System.out.print(cameraSelT[i]+"; ");
+                            Console.Write(cameraSelT[i]+"; ");
 						}else{
-							System.out.print(cameraSelT[i]);
+                            Console.Write(cameraSelT[i]);
 						}
         			}
 			}
-			System.out.println("");
-System.out.println("");
-			for (i = 1; i<dOption.length;i++){
+            Console.WriteLine("");
+            Console.WriteLine("");
+			for (i = 1; i<dOption.Length;i++){
 				if (dOptionChecked[i]){
-					if (!options[i].equals("Vehículos volcados")){
-						System.out.print("x"+options[i]+"    ");
+					if (!options[i].Equals("Vehículos volcados")){
+                        Console.Write("x"+options[i]+"    ");
 					}
-						if (options[i].equals("Vehículos volcados")){	  									  								
-							System.out.print("xVehículos volcados"+ ": "+ volNumber);
+						if (options[i].Equals("Vehículos volcados")){
+                            Console.Write("xVehículos volcados"+ ": "+ volNumber);
 						}
 						}else{
-							System.out.print(options[i]+"    ");
+                            Console.Write(options[i]+"    ");
 					}
 				}
-			System.out.println("");
-			if (typeText.equals("Incidente") || typeText.equals("Accidente")){
-				for (int i = 1; i<vOption.length;i++){
-					if (vOptionTSel[i]){	  			  					
-							System.out.print("x"+options1[i]+": "+vOptionNumber[i]+"    ");  			  							  			  							
+                Console.WriteLine("");
+			if (typeText.Equals("Incidente") || typeText.Equals("Accidente")){
+				for (int i = 1; i<vOption.Length;i++){
+					if (vOptionTSel[i]){
+                            Console.Write("x"+options1[i]+": "+vOptionNumber[i]+"    ");  			  							  			  							
 							}else{
-								System.out.print(options1[i]+"    ");
+                            Console.Write(options1[i]+"    ");
 						}  			  				
 				}
-				System.out.println("");
-System.out.println("");
-System.out.println("Titulo de Comunicación: "+comTitle);
-System.out.println("Tipo de Comunicación: "+newComSel);
-System.out.println("Medio de Comunicación: "+comMeanSel);
-System.out.println("Motivo de Comunicación: "+motiveSel);
-System.out.println("Tipo Origen Destion: "+originSel);
-System.out.println("Origen/Destino: "+originC_DestSel);
-System.out.println("Importancia: "+importanceSel);
-System.out.println("Asunto: "+matterCom);
-System.out.println("Observaciones: "+commentCom);
+                Console.WriteLine("");
+                Console.WriteLine("");
+                Console.WriteLine("Titulo de Comunicación: "+comTitle);
+                Console.WriteLine("Tipo de Comunicación: "+newComSel);
+                Console.WriteLine("Medio de Comunicación: "+comMeanSel);
+                Console.WriteLine("Motivo de Comunicación: "+motiveSel);
+                Console.WriteLine("Tipo Origen Destion: "+originSel);
+                Console.WriteLine("Origen/Destino: "+originC_DestSel);
+                Console.WriteLine("Importancia: "+importanceSel);
+                Console.WriteLine("Asunto: "+matterCom);
+                Console.WriteLine("Observaciones: "+commentCom);
 					}
-			
-				fis.close();
-				System.out.flush();
-System.setOut(old);
-				
-			
+                fis.Close();
+                fis.Dispose();
+				Console.Out.Flush();
 	}
 
         private Boolean isElementPresent(By by)
