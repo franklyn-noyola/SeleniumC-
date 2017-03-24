@@ -25,17 +25,17 @@ namespace AUSA
         public static Boolean supervT = false; public static string PkmText; public static string PkmText1;
         public static IWebElement ramalsText; public static string ramalsText1; public static string typeAcc;
         public static string observacionesText; public static IWebElement supervisorText; public static string supervisorText1;
-        public static string typeImpact; public static string cAparente;public static Boolean[] cameraOpt;
+        public static string typeImpact; public static string cAparente;public static Boolean[] cameraOpt = new Boolean[i];
         public static string infoComp;public static string obserGenerales;public static string notaCentro;
         public static IList<IWebElement> mcCamerasS;public static string[] cameraSelT;public static int i = 0;
-        public static string vVolcadosT;public static Boolean[] vOptionTSel;public static IWebElement importanceC;
+        public static string vVolcadosT;public static Boolean[] vOptionTSel = new Boolean[i];public static IWebElement importanceC;
         public static string importanceC1;public static IWebElement newCom; public static string newComSel;
         public static IWebElement comMean; public static string comMeanSel;public static string comTitle;
         public static IWebElement motiveD; public static string motiveSel;public static IWebElement originC; public static string originSel;
         public static IWebElement originC_DestinaC; public static string originC_DestSel;
         public static string importanceSel;public static string matterCom;public static string commentCom;
         public static Boolean errorCreate = false; public static string verFile;public static string path;
-        public static int volNumber;public static int[] vOptionNumber;
+        public static int volNumber;public static int[] vOptionNumber = new int[vOption.Length];
 
         [TestInitialize]
         public void seTup()
@@ -51,7 +51,7 @@ namespace AUSA
                 Actions action = new Actions(driver);
                 driver.Navigate().GoToUrl(baseUrl);
                 System.Threading.Thread.Sleep(500);
-                if (driver.PageSource.Contains("No se puede acceder a este sitio web"))
+                if (driver.PageSource.Contains("No se puede acceder a este sitio web")|| driver.PageSource.Contains("Service Unavailable"))
                 {
                     takeScreenShot("ausaNoDispERR.jpeg");
                     Assert.Fail("ITS NO ESTA DISPONIBLE");
@@ -161,8 +161,8 @@ namespace AUSA
             else
             {
                 errorCreate = false;
-                /*driver.switchTo().window(multipleTabs.get(1));
-                Partes1 = mPartes;
+                driver.SwitchTo().Window(multipleTabs.ElementAt(1));
+                /*Partes1 = mPartes;
                 Assert.assertEquals(mPartes, Partes1);*/
                 IWebElement table = driver.FindElement(By.CssSelector("tbody tr td table#tableIssues.generalTable"));
                 string buscar1 = table.FindElement(By.XPath("//table[@id='tableIssues']/tbody/tr[1]")).GetAttribute("id");
@@ -346,97 +346,93 @@ namespace AUSA
                 verFile = "crearPartesResultadosSuccess";
             }
             path = "C:\\Selenium\\";
-            FileStream oldFile = new FileStream (path+verFile+"_OLD.txt", FileMode.Create);
 			    if (File.Exists(path+verFile+"_OLD.txt")){
-                        File.Delete(path + verFile + "_OLD.txt");
+                        File.Delete("C:\\Selenium\\" + verFile+"_OLD.txt");
                 }
-			FileStream result = new FileStream("C:\\Selenium\\" + verFile + "_NEW.txt", FileMode.Create);
 			if (File.Exists(path + verFile + "_NEW.txt")){
                 File.Copy(path + verFile + "_NEW.txt", path + verFile + "_OLD.txt");
                 }
-						
-			StreamWriter fis = new StreamWriter(result);
-           
-
+            FileStream result = new FileStream(path + verFile + "_NEW.txt", FileMode.Create);
+            StreamWriter write = new StreamWriter(result);
 			if (parteNumber!=null){
-				Console.WriteLine("#Parte: "+parteNumber);
-			}									
-			    Console.WriteLine("Fecha Inicio: "+beginDate);
-                Console.WriteLine("Plantilla: "+tempText1);
-                Console.WriteLine("Gravedad: "+sevText1);
-                Console.WriteLine("Prioridad: "+priorText1);
-                Console.WriteLine("Tipo: "+typeText);
-                Console.WriteLine("Asignado: "+assignedText1);
-			if (supervT){
-                Console.WriteLine("Supervisor: "+supervisorText1);
+				write.WriteLine("#Parte: "+parteNumber);
 			}
-            Console.WriteLine("Autopista: "+autopistaText1);
-            Console.WriteLine("Banda: "+bandaText1);
-            Console.WriteLine("PKM(Km+m): "+PkmText+"+"+PkmText1);
-            Console.WriteLine("Ramales: "+ramalsText1);
-            Console.WriteLine("Localización: "+locateText);
-            Console.WriteLine("Observaciones: "+observacionesText);
+                write.WriteLine("Fecha Inicio: "+beginDate);
+                write.WriteLine("Plantilla: "+tempText1);
+                write.WriteLine("Gravedad: "+sevText1);
+                write.WriteLine("Prioridad: "+priorText1);
+                write.WriteLine("Tipo: "+typeText);
+                write.WriteLine("Asignado: "+assignedText1);
+			if (supervT){
+                write.WriteLine("Supervisor: "+supervisorText1);
+			}
+                write.WriteLine("Autopista: "+autopistaText1);
+                write.WriteLine("Banda: "+bandaText1);
+                write.WriteLine("PKM(Km+m): "+PkmText+"+"+PkmText1);
+                write.WriteLine("Ramales: "+ramalsText1);
+                write.WriteLine("Localización: "+locateText);
+                write.WriteLine("Observaciones: "+observacionesText);
             System.Threading.Thread.Sleep(1000);	  					
 			if (typeText.Equals("Incidente") || typeText.Equals("Accidente")){
-                Console.WriteLine("Tipo de Accidentes: "+ typeAcc);
-                Console.WriteLine("Tipo de Impacto: "+typeImpact);
+                write.WriteLine("Tipo de Accidentes: "+ typeAcc);
+                write.WriteLine("Tipo de Impacto: "+typeImpact);
 			}
-            Console.WriteLine("Causas Aparentes del Hecho: "+cAparente);
-            Console.WriteLine("Información complementaria: "+infoComp);
-            Console.WriteLine("Observaciones Generales: "+obserGenerales);
-            Console.WriteLine("Nota del centro de operaciones: "+notaCentro);
+                write.WriteLine("Causas Aparentes del Hecho: "+cAparente);
+                write.WriteLine("Información complementaria: "+infoComp);
+                write.WriteLine("Observaciones Generales: "+obserGenerales);
+                write.WriteLine("Nota del centro de operaciones: "+notaCentro);
     			if (camCount > 1){
-                    Console.WriteLine("Camara/s Seleccionada/s: ");
+                    write.Write("Camara/s Seleccionada/s: ");
     			}else{
-                    Console.WriteLine("Camara Seleccionada: ");
+                    write.Write("Camara Seleccionada: ");
     			}
 			for (i = 0; i<= mcCamerasS.Count-1;i++){
 				if (cameraOpt[i]){
 						if (camCount > 1){
-                            Console.Write(cameraSelT[i]+"; ");
+                            write.Write(cameraSelT[i]+"; ");
 						}else{
-                            Console.Write(cameraSelT[i]);
+                            write.Write(cameraSelT[i]);
 						}
         			}
 			}
-            Console.WriteLine("");
-            Console.WriteLine("");
+                write.WriteLine("");
+                write.WriteLine("");
 			for (i = 1; i<dOption.Length;i++){
 				if (dOptionChecked[i]){
 					if (!options[i].Equals("Vehículos volcados")){
-                        Console.Write("x"+options[i]+"    ");
+                        write.Write("x"+options[i]+"    ");
 					}
 						if (options[i].Equals("Vehículos volcados")){
-                            Console.Write("xVehículos volcados"+ ": "+ volNumber);
+                            write.Write("xVehículos volcados"+ ": "+ volNumber);
 						}
 						}else{
-                            Console.Write(options[i]+"    ");
+                        write.Write(options[i]+"    ");
 					}
 				}
-                Console.WriteLine("");
+                write.WriteLine("");
 			if (typeText.Equals("Incidente") || typeText.Equals("Accidente")){
 				for (int i = 1; i<vOption.Length;i++){
 					if (vOptionTSel[i]){
-                            Console.Write("x"+options1[i]+": "+vOptionNumber[i]+"    ");  			  							  			  							
+                            write.Write("x"+options1[i]+": "+vOptionNumber[i]+"    ");  			  							  			  							
 							}else{
-                            Console.Write(options1[i]+"    ");
+                            write.Write(options1[i]+"    ");
 						}  			  				
 				}
-                Console.WriteLine("");
-                Console.WriteLine("");
-                Console.WriteLine("Titulo de Comunicación: "+comTitle);
-                Console.WriteLine("Tipo de Comunicación: "+newComSel);
-                Console.WriteLine("Medio de Comunicación: "+comMeanSel);
-                Console.WriteLine("Motivo de Comunicación: "+motiveSel);
-                Console.WriteLine("Tipo Origen Destion: "+originSel);
-                Console.WriteLine("Origen/Destino: "+originC_DestSel);
-                Console.WriteLine("Importancia: "+importanceSel);
-                Console.WriteLine("Asunto: "+matterCom);
-                Console.WriteLine("Observaciones: "+commentCom);
+                write.WriteLine("");
+                write.WriteLine("");
+                write.WriteLine("Titulo de Comunicación: "+comTitle);
+                write.WriteLine("Tipo de Comunicación: "+newComSel);
+                write.WriteLine("Medio de Comunicación: "+comMeanSel);
+                write.WriteLine("Motivo de Comunicación: "+motiveSel);
+                write.WriteLine("Tipo Origen Destion: "+originSel);
+                write.WriteLine("Origen/Destino: "+originC_DestSel);
+                write.WriteLine("Importancia: "+importanceSel);
+                write.WriteLine("Asunto: "+matterCom);
+                write.WriteLine("Observaciones: "+commentCom);
 					}
-                fis.Close();
-                fis.Dispose();
-				Console.Out.Flush();
+                write.Close();
+                write.Dispose();
+                Console.Out.Flush();
 	}
 
         private Boolean isElementPresent(By by)
