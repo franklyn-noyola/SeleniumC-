@@ -162,8 +162,6 @@ namespace AUSA
             {
                 errorCreate = false;
                 driver.SwitchTo().Window(multipleTabs.ElementAt(1));
-                /*Partes1 = mPartes;
-                Assert.assertEquals(mPartes, Partes1);*/
                 IWebElement table = driver.FindElement(By.CssSelector("tbody tr td table#tableIssues.generalTable"));
                 string buscar1 = table.FindElement(By.XPath("//table[@id='tableIssues']/tbody/tr[1]")).GetAttribute("id");
                 parteNumber = buscar1.Substring(6);
@@ -184,11 +182,11 @@ namespace AUSA
             {
                 driver.FindElement(By.Id(typeAccidentes)).Click();
                 System.Threading.Thread.Sleep(500);
-                ranClick("ctl00_ContentZone_mc_typeOfAccident_ctl", 19, 23);
+                ranClick("ctl00_ContentZone_mc_typeOfAccident_ctl","", 19, 23);
                 System.Threading.Thread.Sleep(400);
                 driver.FindElement(By.Id(typeImpacto)).Click();
                 System.Threading.Thread.Sleep(500);
-                ranClick("ctl00_ContentZone_mc_causal_ctl", 19, 23);
+                ranClick("ctl00_ContentZone_mc_causal_ctl","", 19, 23);
                 System.Threading.Thread.Sleep(500);
             }
             driver.FindElement(By.Id("ctl00_ContentZone_txt_causes_box_data")).SendKeys("This was written by automation scrript for Test Purpose");
@@ -198,7 +196,7 @@ namespace AUSA
             System.Threading.Thread.Sleep(500);
             driver.FindElement(By.Id(cameraSel)).Click();
             System.Threading.Thread.Sleep(500);
-            ranClick("ctl00_ContentZone_mcCameras_ctl", 105, 119);
+            ranClick("ctl00_ContentZone_mcCameras_ctl","", 105, 119);
             System.Threading.Thread.Sleep(400);
             driver.FindElement(By.Id(cameraSel)).Click();
         }
@@ -339,97 +337,99 @@ namespace AUSA
 					}
 			
 	}
-		public static void crearFichero() {
-			if (errorCreate){
+        public static void crearFichero() {
+            if (errorCreate) {
                 verFile = "crearPartesResultdosErrFile";
-            } else{
+            } else {
                 verFile = "crearPartesResultadosSuccess";
             }
-            path = "C:\\Selenium\\";
-			    if (File.Exists(path+verFile+"_OLD.txt")){
-                        File.Delete("C:\\Selenium\\" + verFile+"_OLD.txt");
-                }
-			if (File.Exists(path + verFile + "_NEW.txt")){
+            path = "C:\\Selenium\\";            
+            if (File.Exists(path + verFile + "_OLD.txt")) {
+                File.Delete(path + verFile + "_OLD.txt");
+            }
+            if (File.Exists(path + verFile + "_NEW.txt")) {
                 File.Copy(path + verFile + "_NEW.txt", path + verFile + "_OLD.txt");
-                }
+            }
             FileStream result = new FileStream(path + verFile + "_NEW.txt", FileMode.Create);
             StreamWriter write = new StreamWriter(result);
-			if (parteNumber!=null){
-				write.WriteLine("#Parte: "+parteNumber);
-			}
-                write.WriteLine("Fecha Inicio: "+beginDate);
-                write.WriteLine("Plantilla: "+tempText1);
-                write.WriteLine("Gravedad: "+sevText1);
-                write.WriteLine("Prioridad: "+priorText1);
-                write.WriteLine("Tipo: "+typeText);
-                write.WriteLine("Asignado: "+assignedText1);
-			if (supervT){
-                write.WriteLine("Supervisor: "+supervisorText1);
-			}
-                write.WriteLine("Autopista: "+autopistaText1);
-                write.WriteLine("Banda: "+bandaText1);
-                write.WriteLine("PKM(Km+m): "+PkmText+"+"+PkmText1);
-                write.WriteLine("Ramales: "+ramalsText1);
-                write.WriteLine("Localización: "+locateText);
-                write.WriteLine("Observaciones: "+observacionesText);
-            System.Threading.Thread.Sleep(1000);	  					
-			if (typeText.Equals("Incidente") || typeText.Equals("Accidente")){
-                write.WriteLine("Tipo de Accidentes: "+ typeAcc);
-                write.WriteLine("Tipo de Impacto: "+typeImpact);
-			}
-                write.WriteLine("Causas Aparentes del Hecho: "+cAparente);
-                write.WriteLine("Información complementaria: "+infoComp);
-                write.WriteLine("Observaciones Generales: "+obserGenerales);
-                write.WriteLine("Nota del centro de operaciones: "+notaCentro);
-    			if (camCount > 1){
-                    write.Write("Camara/s Seleccionada/s: ");
-    			}else{
-                    write.Write("Camara Seleccionada: ");
-    			}
-			for (i = 0; i<= mcCamerasS.Count-1;i++){
-				if (cameraOpt[i]){
-						if (camCount > 1){
-                            write.Write(cameraSelT[i]+"; ");
-						}else{
-                            write.Write(cameraSelT[i]);
-						}
-        			}
-			}
-                write.WriteLine("");
-                write.WriteLine("");
-			for (i = 1; i<dOption.Length;i++){
-				if (dOptionChecked[i]){
-					if (!options[i].Equals("Vehículos volcados")){
-                        write.Write("x"+options[i]+"    ");
-					}
-						if (options[i].Equals("Vehículos volcados")){
-                            write.Write("xVehículos volcados"+ ": "+ volNumber);
-						}
-						}else{
-                        write.Write(options[i]+"    ");
-					}
-				}
-                write.WriteLine("");
-			if (typeText.Equals("Incidente") || typeText.Equals("Accidente")){
-				for (int i = 1; i<vOption.Length;i++){
-					if (vOptionTSel[i]){
-                            write.Write("x"+options1[i]+": "+vOptionNumber[i]+"    ");  			  							  			  							
-							}else{
-                            write.Write(options1[i]+"    ");
-						}  			  				
-				}
-                write.WriteLine("");
-                write.WriteLine("");
-                write.WriteLine("Titulo de Comunicación: "+comTitle);
-                write.WriteLine("Tipo de Comunicación: "+newComSel);
-                write.WriteLine("Medio de Comunicación: "+comMeanSel);
-                write.WriteLine("Motivo de Comunicación: "+motiveSel);
-                write.WriteLine("Tipo Origen Destion: "+originSel);
-                write.WriteLine("Origen/Destino: "+originC_DestSel);
-                write.WriteLine("Importancia: "+importanceSel);
-                write.WriteLine("Asunto: "+matterCom);
-                write.WriteLine("Observaciones: "+commentCom);
-					}
+            if (parteNumber != null) {
+                write.WriteLine("#Parte: " + parteNumber);
+            }
+            write.WriteLine("Fecha Inicio: " + beginDate);
+            write.WriteLine("Plantilla: " + tempText1);
+            write.WriteLine("Gravedad: " + sevText1);
+            write.WriteLine("Prioridad: " + priorText1);
+            write.WriteLine("Tipo: " + typeText);
+            write.WriteLine("Asignado: " + assignedText1);
+            if (supervT) {
+                write.WriteLine("Supervisor: " + supervisorText1);
+            }
+            write.WriteLine("Autopista: " + autopistaText1);
+            write.WriteLine("Banda: " + bandaText1);
+            write.WriteLine("PKM(Km+m): " + PkmText + "+" + PkmText1);
+            write.WriteLine("Ramales: " + ramalsText1);
+            write.WriteLine("Localización: " + locateText);
+            write.WriteLine("Observaciones: " + observacionesText);
+            System.Threading.Thread.Sleep(1000);
+            if (typeText.Equals("Incidente") || typeText.Equals("Accidente")) {
+                write.WriteLine("Tipo de Accidentes: " + typeAcc);
+                write.WriteLine("Tipo de Impacto: " + typeImpact);
+            }
+            write.WriteLine("Causas Aparentes del Hecho: " + cAparente);
+            write.WriteLine("Información complementaria: " + infoComp);
+            write.WriteLine("Observaciones Generales: " + obserGenerales);
+            write.WriteLine("Nota del centro de operaciones: " + notaCentro);
+            if (camCount > 1) {
+                write.Write("Camara/s Seleccionada/s: ");
+            } else {
+                write.Write("Camara Seleccionada: ");
+            }
+            for (i = 0; i <= mcCamerasS.Count - 1; i++) {
+                if (cameraOpt[i]) {
+                    if (camCount > 1) {
+                        write.Write(cameraSelT[i] + "; ");
+                    } else {
+                        write.Write(cameraSelT[i]);
+                    }
+                }
+            }
+            write.WriteLine("");
+            write.WriteLine("");
+            for (i = 1; i < dOption.Length; i++) {
+                if (dOptionChecked[i]) {
+                    if (!options[i].Equals("Vehículos volcados")) {
+                        write.Write("x" + options[i] + "    ");
+                    }
+                    if (options[i].Equals("Vehículos volcados")) {
+                        write.Write("xVehículos volcados" + ": " + volNumber);
+                    }
+                } else {
+                    write.Write(options[i] + "    ");
+                }
+            }
+            write.WriteLine("");
+            if (typeText.Equals("Incidente") || typeText.Equals("Accidente")) {
+                for (int i = 1; i < vOption.Length; i++) {
+                    if (vOptionTSel[i]) {
+                        write.Write("x" + options1[i] + ": " + vOptionNumber[i] + "    ");
+                    } else {
+                        write.Write(options1[i] + "    ");
+                    }
+                }
+            }
+            if (driver.FindElements(By.Id(communicationField)).Count != 0) { 
+                    write.WriteLine("");
+                    write.WriteLine("");
+                    write.WriteLine("Titulo de Comunicación: " + comTitle);
+                    write.WriteLine("Tipo de Comunicación: " + newComSel);
+                    write.WriteLine("Medio de Comunicación: " + comMeanSel);
+                    write.WriteLine("Motivo de Comunicación: " + motiveSel);
+                    write.WriteLine("Tipo Origen Destion: " + originSel);
+                    write.WriteLine("Origen/Destino: " + originC_DestSel);
+                    write.WriteLine("Importancia: " + importanceSel);
+                    write.WriteLine("Asunto: " + matterCom);
+                    write.WriteLine("Observaciones: " + commentCom);
+        }		
                 write.Close();
                 write.Dispose();
                 Console.Out.Flush();

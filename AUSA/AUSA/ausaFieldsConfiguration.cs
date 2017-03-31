@@ -14,11 +14,33 @@ namespace AUSA
         public static IWebDriver driver;
         public static string baseUrl = "http://172.18.133.105/12263/web/forms/core/login.aspx?mode=login";
         public static string mPartes;
+        public static string weaLabel = "ctl00_ContentZone_BtnAddWeather_IB_Label";
+        public static string traffLabel = "ctl00_ContentZone_BtnAddTraffic_IB_Label";
+        public static string roadLabel = "ctl00_ContentZone_BtnAddRoadway_IB_Label";
+        public static string otherLabel = "ctl00_ContentZone_BtnAddOther_IB_Label";
+        public static string jobOrLabel = "ctl00_ContentZone_BtnAddJobOrder_IB_Label";
+        public static string infoLabel = "ctl00_ContentZone_BtnAddInsideInformation_IB_Label";
+        public static string inconLabel = "ctl00_ContentZone_BtnAddInconvenientSchedule_IB_Label";
+        public static string cranLabel = "ctl00_ContentZone_BtnAddCrane_IB_Label";
+        public static string securLabel = "ctl00_ContentZone_BtnAddSecurity_IB_Label";
+        public static string vehLabel = "ctl00_ContentZone_BtnAddVehicle_IB_Label";
+        public static string comLabel = "ctl00_ContentZone_BtnAddComunication_IB_Label";
+        public static String patroLabel = "ctl00_ContentZone_BtnAddPatrol_IB_Label";
         public Boolean acceptNextAlert = true;
         public static int numbering;
+        public static string caMe;
+        public static string acam;
+        public static int ad;
+        public static int caMer;
+        public static string ambLabel = "ctl00_ContentZone_BtnAddAmbulance_IB_Label";
+        public static string perLabel = "ctl00_ContentZone_BtnAddPerson_IB_Label";
+        public static string[] personsT = new string[] { "Pilar Bonilla", "Mavi Garrido", "Francisco Castro", "Miguel Angel Sanchez", "Franklyn Garcia", "Maria Blanco", "Oscar Bailon", "Fatima Romano", "Marc Navarro" };
         public static string tipoSel;
+        public static string partText;
+        public static string NIF_STRING_ASOCIATION = "TRWAGMYFPDXBNJZSQVHLCKE";
         public static string linkPartes;
         public static string Types;
+        public static int[] genderT = new int[] { 1, 1, 2, 2, 2, 1, 2, 1, 2 };
         public static string issueCreateBtn = "ctl00_ButtonsZone_BtnSave_IB_Label";
         public static string communicationField = "ctl00_ContentZone_ctrl_newComunication_txt_Title_box_data";
         public static string medioField = "ctl00_ContentZone_ctrl_newComunication_cmb_mean_cmb_dropdown";
@@ -68,7 +90,7 @@ namespace AUSA
         public static string BtnAddInformation = "ctl00_ContentZone_BtnAddInsideInformation_IB_Label";
         public static string BtnAddInconvenient = "ctl00_ContentZone_BtnAddInconvenientSchedule_IB_Label";
 
-        public void clickAll(string id, int camp1, int camp2)
+        public static void clickAll(string id, int camp1, int camp2)
         {
 
             for (int i = camp1; i <= camp2; i = i + 2)
@@ -130,13 +152,13 @@ namespace AUSA
 
         }
 
-        public void elementClick(string byID)
+        public static void elementClick(string byID)
         {
             driver.FindElement(By.Id(byID)).Click();
 
         }
                
-        public void notEmptyDropDown(string by)
+        public static void notEmptyDropDown(string by)
         {
             SelectElement fDropDown = new SelectElement(driver.FindElement(By.Id(by)));
             IList<IWebElement> fDsel = fDropDown.Options;
@@ -158,8 +180,15 @@ namespace AUSA
             ITakesScreenshot scrFile = driver as ITakesScreenshot;
             scrFile.GetScreenshot().SaveAsFile("C:\\Selenium\\"+fname, System.Drawing.Imaging.ImageFormat.Jpeg);
 	  }
-
-    public static void ranClick(string ranSel, int min, int max)
+        public static void ranSelection(String selId, int len1)
+        {
+            IList <IWebElement>mcCameras = driver.FindElements(By.XPath("//*[contains(@id, '"+selId+"')]"));
+            caMe = mcCameras.ElementAt(0).GetAttribute("id");
+            acam = mcCameras.ElementAt(mcCameras.Count - 1).GetAttribute("id");
+            ad = Int32.Parse(caMe.Substring(len1));
+            caMer = Int32.Parse(acam.Substring(len1));
+            }
+    public static void ranClick(string ranSel, string n, int min, int max)
         {// Elegir elemento al azar
             Random rand = new Random();
 
@@ -172,6 +201,40 @@ namespace AUSA
             }
             driver.FindElement(By.Id(ranSel + d)).Click();
 
+        }
+        public static Boolean isElementPresent(By by)
+        {
+            try
+            {
+                driver.FindElement(by);
+                return true;
+            }
+            catch (NoSuchElementException e)
+            {
+                return false;
+            }
+        }
+        public static void selectDropDownClick2(String by)
+        {
+            SelectElement vDropdown = new SelectElement(driver.FindElement(By.Id(by)));
+            IList<IWebElement> dd = vDropdown.Options;
+            Random rand = new Random();
+            int vdd = rand.Next(dd.Count) + 1;
+            if (vdd <= 0) { vdd = vdd + 1; }
+
+            if (vdd >= dd.Count) { vdd = dd.Count - 1; }
+            new SelectElement(driver.FindElement(By.Id(by))).SelectByIndex(vdd);
+
+        }
+        public static int ranYearNumbr(int min, int max)
+        {
+            Random rand = new Random();
+            numbering = min + rand.Next((max - min) + 1);
+            return numbering;
+        }
+        public static string dniLetra(int dni)
+        {
+            return Convert.ToString(dni) + (NIF_STRING_ASOCIATION.ElementAt(dni % 23));
         }
 
     }

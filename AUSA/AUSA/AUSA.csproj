@@ -67,9 +67,22 @@
   </Choose>
   <ItemGroup>
     <Compile Include="ausaFieldsConfiguration.cs" />
+    <Compile Include="ausaModificaPartes.cs" />
     <Compile Include="ausaVerPartes.cs" />
     <Compile Include="ausaIssuesCreate.cs" />
     <Compile Include="ausaIssues.cs" />
+    <Compile Include="ambulanceCompScreen.cs" />
+    <Compile Include="calzadaCompScreen.cs" />
+    <Compile Include="trafficCompScreen.cs" />
+    <Compile Include="weatherCompScreen.cs" />
+    <Compile Include="craneCompScreen.cs" />
+    <Compile Include="infoCompScreen.cs" />
+    <Compile Include="inconCompScreen.cs" />
+    <Compile Include="securityCompScreen.cs" />
+    <Compile Include="patrolCompScreen.cs" />
+    <Compile Include="personCompScreen.cs" />
+    <Compile Include="vehicleCompScreen.cs" />
+    <Compile Include="communicationCompScreen.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

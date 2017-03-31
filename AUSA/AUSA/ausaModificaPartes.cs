@@ -15,7 +15,6 @@ namespace AUSA
     public class ausaModificarPartes : ausaFieldsConfiguration
     {
 
-        public static string mPartes;
         public static int i;
         public static int xll;
         public static int selComp;
@@ -259,57 +258,44 @@ namespace AUSA
             //compT = "IB_weather";
             switch (compT)
             {
-                case "IB_comunication":
-                    System.Threading.Thread.Sleep(1000);
-                    AUSA.communicationCompScreen.ibCommunication();
-                    break;
-                case "IB_vehicle":
-                    System.Threading.Thread.Sleep(1000);
-                    AUSA.vehicleCompScreen.ibVehicle();
-                    break;
-                case "IB_person":
-                    System.Threading.Thread.Sleep(1000);
-                    AUSA.personCompScreen.ibPerson();
-                    break;
-                case "IB_patrol":
-                    System.Threading.Thread.Sleep(1000);
-                    AUSA.patrolCompScreen.ibPatrol();
-                    break;
-                case "IB_security":
-                    System.Threading.Thread.Sleep(1000);
-                    AUSA.securityCompScreen.ibSecurity();
-                    break;
-                case "IB_ambulance":
-                    System.Threading.Thread.Sleep(1000);
-                    AUSA.ambulanceCompScreen.ibAmbulance();
-                    break;
-                case "IB_crane":
-                    System.Threading.Thread.Sleep(1000);
-                    AUSA.craneCompScreen.ibCrane();
-                    break;
-                case "IB_weather":
-                    System.Threading.Thread.Sleep(1000);
-                    AUSA.weatherCompScreen.ibWeather();
-                    break;
-                case "IB_trafic":
-                    System.Threading.Thread.Sleep(1000);
-                    AUSA.trafficCompScreen.ibTraffic();
-                    break;
-                case "IB_roadway":
-                    System.Threading.Thread.Sleep(1000);
-                    AUSA.calzadaCompScreen.ibCalzada();
-                    break;
-                case "IB_insideInformation":
-                    System.Threading.Thread.Sleep(1000);
-                    AUSA.infoCompScreen.ibInformation();
-                    break;
-                case "IB_inconvenientShedule":
-                    System.Threading.Thread.Sleep(1000);
-                    AUSA.inconCompScreen.ibInconveniente();
-                    break;
-                default:
-                    Console.WriteLine(compT + " No está implementado");
-                    break;
+                case "IB_comunication":                     System.Threading.Thread.Sleep(1000);
+                                                            AUSA.communicationCompScreen.ibCommunication();
+                                                            break;
+                case "IB_vehicle":                          System.Threading.Thread.Sleep(1000);
+                                                            AUSA.vehicleCompScreen.ibVehicle();
+                                                            break;
+                case "IB_person":                           System.Threading.Thread.Sleep(1000);
+                                                            AUSA.personCompScreen.ibPerson();
+                                                            break;
+                case "IB_patrol":                           System.Threading.Thread.Sleep(1000);
+                                                            AUSA.patrolCompScreen.ibPatrol();
+                                                            break;
+                case "IB_security":                         System.Threading.Thread.Sleep(1000);
+                                                            AUSA.securityCompScreen.ibSecurity();
+                                                            break;
+                case "IB_ambulance":                        System.Threading.Thread.Sleep(1000);
+                                                            AUSA.ambulanceCompScreen.ibAmbulance();
+                                                            break;
+                case "IB_crane":                            System.Threading.Thread.Sleep(1000);
+                                                            AUSA.craneCompScreen.ibCrane();
+                                                            break;
+                case "IB_weather":                          System.Threading.Thread.Sleep(1000);
+                                                            AUSA.weatherCompScreen.ibWeather();
+                                                            break;
+                case "IB_trafic":                           System.Threading.Thread.Sleep(1000);
+                                                            AUSA.trafficCompScreen.ibTraffic();
+                                                            break;
+                case "IB_roadway":                          System.Threading.Thread.Sleep(1000);
+                                                            AUSA.calzadaCompScreen.ibCalzada();
+                                                            break;
+                case "IB_insideInformation":                System.Threading.Thread.Sleep(1000);
+                                                            AUSA.infoCompScreen.ibInformation();
+                                                            break;
+                case "IB_inconvenientShedule":              System.Threading.Thread.Sleep(1000);
+                                                            AUSA.inconCompScreen.ibInconveniente();
+                                                            break;
+                default:                                    Console.WriteLine(compT + " No está implementado");
+                                                            break;
             }
 
 
